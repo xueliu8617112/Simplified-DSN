@@ -18,7 +18,8 @@ from utils import *
 from models import *
 
 #Loading Mnist Data
-print ("LOADING MNIST")
+print ("LOADING PU0")
+
 mnist = input_data.read_data_sets('data', one_hot=True)
 mnist_train  = (mnist.train.images > 0).reshape(55000, 28, 28, 1).astype(np.uint8) * 255
 mnist_train  = np.concatenate([mnist_train, mnist_train, mnist_train], 3)
@@ -221,6 +222,9 @@ def train_and_evaluate(training_mode, graph, model, batch_size=128, every_epoch=
 print('\n Adaptation training')
 dsn_emb,sess = train_and_evaluate('DSN', graph, model)
 
+tsne = TSNE(perplexity=30, n_components=2, init='pca', n_iter=3000)
+dsn_tsne = tsne.fit_transform(dsn_emb)
+plot_embedding(dsn_tsne, combined_test_labels.argmax(1), combined_test_domain.argmax(1), 'Domain Adaptation')
 
 def compare_recon(sess, batch_source, batch_target, model):
     s = sess.run([model.decode_s], feed_dict={model.source: batch_source, model.target: batch_target})
