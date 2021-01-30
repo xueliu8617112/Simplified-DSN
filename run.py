@@ -202,7 +202,7 @@ def train_and_evaluate(training_mode, graph, model, batch_size=128, every_epoch=
 
             _, domain_acc, recon_l, source_loss, diff = sess.run(
                 [optm_class_dann, accr_domain_dann, recon_loss, source_class_loss, diff_loss], feed_dict=feeds_class)
-            if verbose and i % 500 == 0:
+            if verbose and i % 5 == 0:
                 # CHECK BOTH LOSSES
                 print("[%d/%d] p: %.3f d_acc: %.3f, class_loss: %.3f, recon_loss: %.3f, diff_loss: %.3f"
                       % (i, num_steps, p, domain_acc, source_loss, recon_l, diff))
